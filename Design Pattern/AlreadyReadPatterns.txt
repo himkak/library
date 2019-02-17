@@ -1,0 +1,11 @@
+Strategy Pattern
+Observer Pattern
+Decorator Pattern
+Factory and abstract factory Pattern
+singleton Pattern
+Command Pattern
+Adaptor Pattern
+
+Builder
+Prototype
+MVC

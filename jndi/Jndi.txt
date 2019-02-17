@@ -1,0 +1,241 @@
+Intro :
+=======
+If a distributed application's components can't locate one another, then they can't work together. Therefore, distributed applications require, almost by definition, something to help the components to find each other. The Java Naming and Directory Interface (JNDI) provides just this capability. 
+
+
+Uses
+====
+-Using JNDI, applications based on Java technology can store and retrieve named Java objects of any type.
+-In addition, JNDI provides methods for performing standard directory operations, such as associating attributes with objects and searching for objects using their attributes.
+
+JNDI : Java Naming and Directory Service
+========================================
+Divided into 2 parts :
+1)naming service
+2)Directory service
+
+
+Naming Service:
+===============
+-Maps names to objects 
+
+Diagram : http://www.nyu.edu/classes/jcf/g22.3033-007_sp01/handouts/g22_3033_h83.htm
+-A naming service maintains a set of bindings. Bindings relate names to objects. All objects in a naming system are named in the same way (that is, they subscribe to the same naming convention). Clients use the naming service to locate objects by name. 
+
+-the primary function of a naming system is to bind names to objects (or, in some cases, to references to objects
+
+-In order to be a naming service, a service must at the very least provide the ability to bind names to objects and to look up objects by name. 
+
+Eg : A card catalog, for the uninitiated, maps the names of books to their location in the library. As surprising as it may seem, the notion of a card catalog is quite handy in the world of computing, as well. In computing, we call it a naming service, which associates names with the locations of services and with information. It provides computer programs with a single location where they can find the resources they need. 
+
+
+
+
+Binding :A naming service maintains a set of bindings. Bindings relate names to objects. All objects in a naming system are named in the same way (that is, they subscribe to the same naming convention). Clients use the naming service to locate objects by name. 
+
+Context: A context is a set of name-to-object bindings. Every context has an associated naming convention. A context provides a lookup (resolution) operation that returns the object and may provide operations such as those for binding names, unbinding names, and listing bound names. 
+
+
+Some existing naming services : COS, DNS, LDAP, NIS
+
+Unix file system Naming Service:
+The UNIX file system has a namespace consisting of all of the names of files and directories in that file system.
+
+DNS:
+The DNS namespace contains names of DNS domains and entries. 
+The DNS contains bindings that map machine names to IP addresses.
+The Internet's naming service; maps people-friendly names (such as www.etcee.com) into computer-friendly IP (Internet Protocol) addresses in dotted-quad notation (207.69.175.36). Interestingly, DNS is a distributed naming service, meaning that the service and its underlying database is spread across many hosts on the Internet. 
+
+LDAP:
+The LDAP namespace contains names of LDAP entries. 
+An LDAP name is bound to an LDAP entry. 
+Developed by the University of Michigan; as its name implies, it is a lightweight version of DAP (Directory Access Protocol), which in turn is part of X.500, a standard for network directory services. Currently, over 40 companies endorse LDAP. 
+
+How to use some existing Naming services and do lookup and get the reqd objects(conext):
+==================================
+Unix file system naming service:
+
+--
+package test.jndi;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.Binding;
+import javax.naming.NamingEnumeration;
+import javax.naming.NamingException;
+import java.util.Hashtable;
+
+public class UnixFileSystemNamingService {
+  public  static  void  main(String [] rgstring) {
+    try {
+      // Create the initial context.  The environment
+      // information specifies the JNDI provider to use
+      // and the initial URL to use (in our case, a
+      // directory in URL form -- file:///...).
+      Hashtable<String,String> hashtableEnvironment = new Hashtable<String,String>();
+      hashtableEnvironment.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.fscontext.RefFSContextFactory");
+      hashtableEnvironment.put(Context.PROVIDER_URL, rgstring[0]);
+      Context context = new InitialContext(hashtableEnvironment);
+      // If you provide no other command line arguments,
+      // list all of the names in the specified context and
+      // the objects they are bound to.
+      if (rgstring.length == 1) {
+        NamingEnumeration namingenumeration = context.listBindings("");
+        while (namingenumeration.hasMore()) {
+          Binding binding = (Binding)namingenumeration.next();
+          System.out.println(binding.getName() + " " +binding.getObject());
+        }
+      }
+      // Otherwise, list the names and bindings for the
+      // specified arguments.
+      else {
+        for (int i = 1; i < rgstring.length; i++) {
+          Object object = context.lookup(rgstring[i]);
+          System.out.println(rgstring[i] + " " + object );
+        }
+      }
+      context.close();
+    }
+    catch (NamingException namingexception) {
+      namingexception.printStackTrace();
+    }
+  }
+}
+
+--
+
+
+
+
+
+Example of using it in application server
+=========================================
+Java EE components locate objects by invoking the JNDI lookup method.
+The names are bound to their objects by the naming and directory service that is provided by a Java EE server.
+Because Java EE components access this service through the JNDI API, the object usually uses its JNDI name.
+When it starts up, the Enterprise Server reads information from the configuration file and automatically adds JNDI database names to the name space.
+
+
+Ref : http://docs.oracle.com/cd/E17952_01/refman-5.5-en/connector-j-usagenotes-glassfish-config-jsp.html
+Example to do JDBC connectivity from JSP using the JNDI name 
+
+EJB JNDI Glassfish using annotations
+Access an ejb(deployed in glassfish and having jndi annotated mapped-name) from a remote class using jndi
+===================================================================
+Ref : http://anirbanchowdhury.wordpress.com/2012/06/07/ejb-3-application-in-glassfish-3x/
+
+Interface :
+@Remote
+public interface PlaceAuctionItem {
+    void placeAuctionItem();
+}
+ 
+EJB : 
+@Stateless(name="PlaceAuctionItem", mappedName="ejb/PlaceAuctionItem")
+public class PlaceAuctionItemBean implements PlaceAuctionItem{
+ 
+    @Override
+    public void placeAuctionItem() {
+        System.out.println("saving the AuctionItem ");
+        //save the auctionItem in the database
+         
+    }
+ }
+
+--
+
+Access this ejb:
+		Properties props = new Properties();
+        props.put(Context.INITIAL_CONTEXT_FACTORY,"com.sun.enterprise.naming.SerialInitContextFactory");
+        props.setProperty("org.omg.CORBA.ORBInitialHost", "localhost");
+        // glassfish default port value will be 3700,
+         props.setProperty("org.omg.CORBA.ORBInitialPort", "3700");
+        InitialContext ctx = new InitialContext(props);
+             
+        this.placeAuctionItem = (PlaceAuctionItem)ctx.lookup("ejb/PlaceAuctionItem");
+   
+
+
+EJB JNDI Glassfish using deployment-descriptor configuration
+==================================================================
+Ref :http://docs.oracle.com/cd/E18930_01/html/821-2418/beans.html
+
+Configuration in Deployemnt Descriptor:
+	<ejb-local-ref>
+	    <ejb-ref-name>ejb/repositoryManagement</ejb-ref-name>
+	    <ejb-ref-type>Session</ejb-ref-type>	    
+	    <local-home/>
+	    <local>com.ericsson.acs.resource.manager.ResourceManagerLocal</local>
+	    <ejb-link>Resource-Management-0.0.1.jar#ResourceManager</ejb-link>
+	</ejb-local-ref>
+	
+	How to get the reference :
+	  public final ResourceManagerLocal lookupRepositoryManagement()
+    {
+        InitialContext ctx;
+        try
+        {
+            ctx = new InitialContext();
+            return (ResourceManagerLocal) ctx.lookup("java:comp/env/ejb/repositoryManagement");
+        }
+        catch (NamingException e)
+        {
+            LOGGER.error("Could not find RepositoryManagement: " + e.getMessage());
+            throw new EJBServiceLocatorException("Could not find RepositoryManagement", e);
+        }
+    }
+    
+    
+ Access an ejb(with annotations deployed in gf) from another class in glassfish
+ ==============================================================================
+ 
+ 
+ Register an object in Glassfish
+ ==============================
+ This happens for EJB by using annotations or configuring DD
+ 
+ 
+Ejb not listed in the jndi-list-entry ?? Reason why and how will it be listed
+======================================
+
+Directory Service:
+==================
+A directory service associates names with objects and also allows such objects to have attributes. Thus, you not only can look up an object by its name but also get the object's attributes or search for the object based on its attributes. 
+
+
+How to make a service:
+=====================
+
+
+Glassfish and JNDI 
+==================
+
+
+How is this been used in our code :
+===================================
+
+
+What all changes we have to do for the SDK functionality
+========================================================
+The connector Plugin will be made by SI and it will be deployed in GF.
+The connector plugin will add annotations in its code so that ERDM can do a JNDI lookup.
+We will get the object in our ERDM code and this object will be used to access the plugin.
+
+This connector will be EJB, and it will implement the interface ProtocolDataPlugin.
+Name : DeviceProtocolDataPlugin<protocol>.java
+
+When the dropdown will be clicked, it will get the names of the new protocols from the DB.
+The names of the new protocol will be saved in the DB or configured in GUI.
+
+
+
+
+ProtocolDataPluginLookupServiceBase -getProtocolDataPlugin
+DeviceProtocolDataPluginLookupService - getProtocolDataPlugin
+DeviceServiceSoftwareManagement - addProtocolSpecificAttributes
+SoftwareController - setSoftware
+
+
+
+
+

@@ -1,0 +1,102 @@
+MAVEN
+=====
+
+*Usage : 
+--------
+ -Build Tool 
+ -Project Management
+
+*Build Tool :
+-------------
+ -multiple jars dependency resolver
+ -handles dependencies and versions
+ -used to set up project structure
+ -used to build, publish & deploy
+ 
+*How to Install Maven
+----------------------
+ -unzip the zip file
+ -set M2_HOME = maven directory
+ -add maven bin directory path to PATH
+ -you can do this by using export : (1)export M2_HOME="<maven directory>" (2)export PATH=<maven bin directory>:$PATH
+ -To permanently set the mvn, edit the .bashrc file and add (1)export M2_HOME=/home/ehimkak/Desktop/maven/apache-maven-3.1.0
+     (2)export PATH=/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/quest/bin:/opt/quest/sbin:/home/ehimkak/Desktop/maven/apache-maven-3.1.0/bin
+
+ 
+*How to make a maven project
+---------------------------
+-"mvn archetype:generate"
+-archetype means project structure type
+-first you will have to select the archetype by selecting from the given numbers
+-Then you will have to select the version
+-Then give groupId, that is pkg name.
+-Next artifactId : name of the jar or war that will be generated for the project when it will be built
+-Next version
+-Finally a project will be generated
+-Project will contain src & pom.xml 
+-src will contain 2 folders "main" & "test" & pkg structure will be created and sample classes will be generated
+-pom.xml contains all the info that we gave at the time of building the project. It also contains info about dependency jars
+
+*How to compile the code
+------------------------
+-Go to pom.xml directory
+-"mvn compile" to compile the classes and all the dependency jars
+-"mvn package" to pkg classes into jar. It will be generated in targetfolder of the project.The junit test cases will also run automatically.
+
+
+*Build Life Cycle
+-----------------
+1)validate (implicit) validates pom,code
+2)compile (explicit) compiles the code
+3)test (explicit)
+4)package (explicit) packages the code to jar or war or ear
+5)install (explicit) copies/installs the package into local maven repository
+6)deploy (explicit) To publish artifacts to external repository
+
+implicit : happens internally, no command
+explicit : commands available 
+
+For one phase, all the previous phases will run. Like for package: test, compile, valida will run.
+
+
+*Some important commands
+------------------------
+-mvn clean : deletes the compiled classes and 
+-mvn compile : validates the code and then compiles the code
+-mvn test : validates the code and then compiles the code and then runs the test cases
+-mvn package : validates the code and then compiles the code and then runs the test cases and then packages the code to jar/ear/war
+-mvn install : validates the code and then compiles the code and then runs the test cases and then packages the code to jar/ear/war and then copies the package to local maven repository
+-mvn deploy : validates the code and then compiles the code and then runs the test cases and then packages the code to jar/ear/war and then copies the package to local maven repository and then publishes the artifact to external repository
+
+-To skip test-cases : At the end of the command add -DskipTests. Like : mvn package -DskipTests
+
+*How to add dependency jars
+----------------------------
+Add the dependency into pom.xml and when you will compile, the jar will be downloaded
+
+
+*Scope
+------
+-Test (To be used during running test-cases)
+-Provider
+-Compile (default)
+
+
+*Plugins
+--------
+Can be added and configured in pom.xml
+Eg : compile plugin can configure the java version to be used during compilation
+Some other pugins : Tomcat(server), Jetty(Server)
+
+
+
+
+
+
+
+mvn install:install-file -Dfile=<path-to-file> -DgroupId=<group-id> -DartifactId=<artifact-id> -Dversion=<version> -Dpackaging=<packaging>
+
+
+mvn org.apache.maven.plugins:maven-install-plugin:2.5.1:install-file  -Dfile=snmp4j-1.11.2.jar -DgroupId=org.snmp4j -DartifactId=snmp4j -Dversion=1.11.2 -Dpackaging=jar -Dclassifier=sources
+
+

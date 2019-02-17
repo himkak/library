@@ -1,0 +1,66 @@
+1)git init
+2)git clone
+3)git add
+4)git commit
+5)git status
+6)git log
+7)git remote show origin
+
+git remote
+git fetch
+git pull
+git push
+
+
+How to make a branch : 
+======================
+git branch <new branch name>
+
+-Check out the specified branch, which should have already been created with git branch. This makes <existing-branch> the current branch, and updates the working directory to match. :  git checkout <branchName to be shifted to> 
+
+
+Git Clone 
+========
+In a nutshell, you use git clone to get a local copy of a Git repository so you can look at it or start modifying it.
+
+
+how to view the branches
+========================
+: git branch 
+
+To view all the branches:
+=========================
+git branch --all
+
+how to discard the changes done in the working directory: 
+============================
+git checkout <fileName>
+
+The git status command displays the state of the working directory and the staging area. It lets you see which changes have been staged, which havent, and which files arent being tracked by Git. : git status
+
+
+To commit changes :
+===================
+1)git add <fileName>
+2)git commit -m <message>
+3)git push
+  -if push fails: "git pull" and then "git push", if then also it fails start from steep 1
+  
+  
+To view the config:
+====================
+git config --list
+
+To configure the user name:
+===========================
+git config user.name <name>
+
+To configure the user email:
+===========================
+git config user.email <email>
+
+
+
+git log
+========
+git log --oneline --decorate | head -5

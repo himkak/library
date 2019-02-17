@@ -1,0 +1,25 @@
+Eclipse Shortcuts
+=================
+-CTRL+Shift+G, which searches the workspace for references to the selected method or variable.
+
+-CTRL + Shift + L : List of shortcuts
+
+-Ctrl + Shift + R: Open any file quickly without browsing for it in the Package Explorer
+
+-Ctrl + Shift + T: Open a type (e.g.: a class, an interface) without clicking through interminable list of packages
+
+-Ctrl + Shift + O: resolve imports
+
+-Ctrl + O: Go directly to a member (method, variable) of a huge class file, especially when a lot of methods are named similarly
+
+-Ctrl + L: Go to line number N in the source file
+
+-Ctrl + Q: Go to the last edit location
+
+-Ctrl + T: Go to a supertype/subtype
+
+-Ctrl + E: Go to other open editors
+
+-ctrl+shift+i : while debugging, check output of an expression
+
+-F3 : go inside a method

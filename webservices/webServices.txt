@@ -1,0 +1,94 @@
+web services :
+==============
+A web service is a method of communication between two electronic devices over the World Wide Web. 
+Web Services can convert your application into a Web-application, which can publish its function or message to the rest of the world.
+The basic Web Services platform is XML + HTTP.
+-A Web service is a set of related application functions that can be programmatically invoked over the Internet.
+
+2 types : 
+   1)soap web service:
+        SOAP follows the RPC pattern. A SOAP API describes a series of methods, along with their parameters and return values, that you can call from your code. There's a marshaling step that converts this into it's network representation.
+		
+        Independent of the transport protocol (could be HTTP, FTP, TCP, UDP, named pipes, shared memory or even email).
+        Requires only that the transport protocol be able to send and receive text (e.g. on HTTP, only the POST verb is used).
+        Strictly defines the format of the messages passed back and forth. A SOAP message contains the data, the action to perform on it, the headers, and the error details in case of failure.
+        Message security is provided by the WS-* standards, and is end-to-end.
+        Originally intended for arbitrary RPC calls.
+
+   2)restful web service:
+        REST is never RPC. A REST API describes a series of resources, along with a set of verbs (typically HTTP's GET, POST, PUT, DELETE) that can act on them.
+		
+        Independent of the transport protocol (could be HTTP, FTP, TCP, UDP, named pipes, shared memory or even email).
+        Requires only that the transport protocol be able to send and receive text (e.g. on HTTP, only the POST verb is used).
+        Strictly defines the format of the messages passed back and forth. A SOAP message contains the data, the action to perform on it, the headers, and the error details in case of failure.
+        Message security is provided by the WS-* standards, and is end-to-end.
+        Originally intended for arbitrary RPC calls.
+
+   
+Diff btwn SOAP and REST:
+   
+   - SOAP stands for Simple Object Access Protocol. REST stands for REpresentational State Transfer.
+   - SOAP is a XML based messaging protocol and REST is not a protocol but an architectural style.
+   - SOAP has a standard specification but there is none for REST.
+   - Whole of the web works based on REST style architecture. Consider a shared resource repository and consumers access the resources.
+   - Even SOAP based web services can be implemented in RESTful style. REST is a concept that does not tie with any protocols.
+   - SOAP is distributed computing style and REST is web style (web is also a distributed computing model).
+   - REST messages should be self-contained and should help consumer in controlling the interaction between provider and consumer(example, links in message to decide the next course of action). But SOAP doesn’t has any such requirements.
+   - REST does not enforces message format as XML or JSON or etc. But SOAP is XML based message protocol.
+   - REST follows stateless model. SOAP has specifications for stateful implementation as well.
+   - SOAP is strongly typed, has strict specification for every part of implementation. But REST gives the concept and less restrictive about the implementation.
+   - Therefore REST based implementation is simple compared to SOAP and consumer understanding.
+   - SOAP uses interfaces and named operations to expose business logic. REST uses (generally) URI and methods like (GET, PUT, POST, DELETE) to expose resources.
+   - SOAP has a set of standard specifications. WS-Security is the specification for security in the implementation. It is a detailed standard providing rules for security in application implementation. Like this we have separate specifications for messaging, transactions, etc. Unlike SOAP, REST does not has dedicated concepts for each of these. REST predominantly relies on HTTPS.
+   - Above all both SOAP and REST depends on design and implementation of the application.
+   
+   
+Soap web services:
+==================
+   Ways to generate wsdl from java code: 
+     1)using axis2
+	 2)IBM JAX-RPC
+	 3)Spring-WS v2
+   Ways to generate web service from wsdl:
+   ways to generate client from wsdl
+   
+   How to deploy a web service in tomcat
+  Configure the axis in tomcat:
+    1)copy the axis2 war in the webapps of tomcat
+	2)start tomcat, open http://localhost:8080/axis2/
+	
+	apis to make restful web service :  jax-rs: jersey , resteasy
+	
+	Queries???
+	==========
+	message oriented web services 
+	RPC oriented web services
+	
+	  SOA : http://www.youtube.com/watch?v=jL1oVENiYT8
+	  Introduction to web services : http://www.youtube.com/watch?v=iB3NNW1zl44
+	1)web services using axis : http://www.youtube.com/watch?v=iscqDDNFzys&list=PLB4D0FF821EE38D5E
+	2)web service using axis2 codegen part 1: http://www.youtube.com/watch?v=-85hyUnAOVU
+	                                  part 2:  http://www.youtube.com/watch?v=j70hUVar7TQ
+                                                           http://www.youtube.com/watch?v=j70hUVar7TQ
+		install axis2 codegen in eclipse : http://www.roseindia.net/webservices/axis2/axis2eclipse/axis2-eclipse-install.shtml				
+       
+        http://www.roseindia.net/webservices/axis2/index.shtml	   
+	
+diff btwn soap n rest : http://javapapers.com/web-service/rest-vs-soap/	
+														   
+														   
+
+Top to bottom approach : means you start with a WSDL and then create all the necessary scaffolding in Java all the way down												   
+Bottom To Top Approach : Bottom-up means you start with a Java method, and generate the WSDL from it.														   
+
+
+-Web services address these issues directly because such services are, first and foremost,language- and platform-neutral.
+
+-Several features distinguish web services from other distributed software systems. Here are three:
+  Open infrastructure: 
+	Web services are deployed using industry-standard, vendor-independent protocols such as HTTP and XML, which are ubiquitous and well understood. Web services
+	can piggyback on networking, data formatting, security, and other infrastructures already in place, which lowers entry costs and promotes interoperability among services.
+  Language transparency:
+	Web services and their clients can interoperate even if written in different programming languages. Languages such as C/C++, C#, Java, Perl, Python, Ruby, and others provide libraries, utilities, and even frameworks in support of web services.
+  Modular design:
+	Web services are meant to be modular in design so that new services can be generated through the integration and layering of existing services. Imagine, for example, an inventory-tracking service integrated with an online ordering service to yield a service that automatically orders the appropriate products in response to inventory levels.

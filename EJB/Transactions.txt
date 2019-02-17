@@ -1,0 +1,2 @@
+1)Container manager
+2)Bean managed

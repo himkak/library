@@ -1,0 +1,7 @@
+Steps to start the xming
+
+start the xshell, login through ssh.
+In the properties, tunneling select XDisplay.
+fire the command "xclock &".
+If u get the clock, then x11 display is working.
+Now run the script for soapui, in the bin directory, with name soapui.sh

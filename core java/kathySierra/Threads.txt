@@ -1,0 +1,44 @@
+q)Are static variables thread-safe
+-No, they are not
+
+q)Are instance variables thread-safe
+-No
+
+q)Every thread refers the instance variables from its cache, when does it sync it with variable in main memory, so that the variable changed is available to other threads
+-
+
+q)What happens if threadMap is changed by multiple threads at same time.
+
+q)If exception is thrown in synchronized block, is lock released
+
+q)What is the definition of thread-safe
+
+q)Thread models
+
+q)Why wait (), notify () and notifyAll () must be called from synchronized block or method in Java
+-if we don't call wait () or notify () method from synchronized context we will receive IllegalMonitorStateException in java.
+-race condition between wait () and notify () : Now let's think how does this potential race condition get resolved? This race condition is resolved by using synchronized keyword and locking provided by java. In order to call the wait (), notify () or notifyAll () methods in Java, we must have obtained the lock for the object on which we're calling the method. Since the wait () method in Java also releases the lock prior to waiting and reacquires the lock prior to returning from the wait () method, we must use this lock to ensure that checking the condition (buffer is full or not) and setting the condition (taking element from buffer) is atomic which can be achieved by using synchronized method or block in Java.
+
+
+
+
+
+
+
+q)why is wait notify and notifyAll in object class
+1) Wait and notify is not just normal methods or synchronization utility, more than that they are communication mechanism between two threads in Java. And Object class is correct place to make them available for every object if this mechanism is not available via any java keyword like synchronized. Remember synchronized and wait notify are two different area and don’t confuse that they are same or related. Synchronized is to provide mutual exclusion and ensuring thread safety of Java class like race condition while wait and notify are communication mechanism between two thread.
+
+2 )Locks are made available on per Object basis, which is another reason wait and notify is declared in Object class rather then Thread class.
+
+3) In Java in order to enter critical section of code, Threads needs lock and they wait for lock, they don't know which threads holds lock instead they just know the lock is hold by some thread and they should wait for lock instead of knowing which thread is inside the synchronized block and asking them to release lock. this analogy fits with wait and notify being on object class rather than thread in Java.
+
+
+q)Difference between wait and sleep
+-Main difference between wait and sleep is that wait() method release the acquired monitor when thread is waiting while Thread.sleep() method keeps the lock or monitor even if thread is waiting. 
+-wait is in object class, sleep is in thread class.
+-wait method in java should be called from synchronized method or block while there is no such requirement for sleep() method.
+-Another difference is Thread.sleep() method is a static method and applies on current thread, while wait() is an instance specific method and only got wake up if some other thread calls notify method on same object. also in case of sleep, sleeping thread immediately goes to Runnable state after waking up while in case of wait, waiting thread first acquires the lock and then goes into Runnable state.
+
+
+
+

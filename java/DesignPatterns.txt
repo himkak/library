@@ -1,0 +1,59 @@
+Design Patterns:
+
+1)Singleton
+2)Factory method pattern: The factory method pattern is an object-oriented creational design pattern to implement the concept of factories and deals with the problem of creating objects (products) without specifying the exact class of object that will be created. The essence of this pattern is to "Define an interface for creating an object, but let the classes that implement the interface decide which class to instantiate. The Factory method lets a class defer instantiation to subclasses."
+Eg:
+//super class that serves as type to be instantiated for factory method pattern
+public interface Pet {
+ 
+ public String speak();
+ 
+}
+--
+//sub class 1 that might get instantiated by a factory method pattern
+public class Dog implements Pet {
+ 
+ public String speak() {
+ return "Bark bark...";
+ }
+}
+--
+
+//sub class 2 that might get instantiated by a factory method pattern
+public class Duck implements Pet {
+ public String speak() {
+ return "Quack quack...";
+ }
+}
+--
+
+//Factory method pattern implementation that instantiates objects based on logic
+public class PetFactory {
+ 
+ public Pet getPet(String petType) {
+ Pet pet = null;
+ 
+ // based on logic factory instantiates an object
+ if ("bark".equals(petType))
+ pet = new Dog();
+ else if ("quack".equals(petType))
+ pet = new Duck();
+ return pet;
+ }
+}
+--
+public class SampleFactoryMethod {
+ 
+ public static void main(String args[]){
+ 
+ //creating the factory
+ PetFactory petFactory = new PetFactory();
+ 
+ //factory instantiates an object
+ Pet pet = petFactory.getPet("bark");
+ 
+ //you don't know which object factory created
+ System.out.println(pet.speak());
+ }
+ 
+}

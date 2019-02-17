@@ -1,0 +1,176 @@
+CHAPTER 6: STRING, IO FORMATTING & PARSING
+==========================================
+Here are some of the key points from the certification objectives in this chapter.
+
+Using String, StringBuffer, and StringBuilder (Objective 3.1)
+------------------------------------------------------------
+- String objects are immutable, and String reference variables are not.
+- If you create a new String without assigning it, it will be lost to your program.
+- If you redirect a String reference to a new String, the old String can be lost.
+- String methods use zero-based indexes, except for the second argument of substring().
+- The String class is final its methods can't be overridden.
+- When the JVM finds a String literal, it is added to the String literal pool.
+- Strings have a method: length(), arrays have an attribute named length.
+- The StringBuffer's API is the same as the new StringBuilder's API, except that StringBuilder's methods are not synchronized for thread safety.
+- StringBuilder methods should run faster than StringBuffer methods.
+- All of the following bullets apply to both StringBuffer and StringBuilder:
+- They are mutable they can change without creating a new object.
+- StringBuffer methods act on the invoking object, and objects can change without an explicit assignment in the statement.
+- StringBuffer equals() is not overridden; it doesn't compare values.
+
+- Remember that chained methods are evaluated from left to right.
+- String methods to remember: charAt(), concat(), equalsIgnoreCase(), length(), replace(), substring(), toLowerCase(), toString(), toUpperCase(), and trim(), toCharArray().
+- Stringbuffer methods to remember: append(), delete(), insert(), reverse(), and toString().
+
+
+File I/O (Objective 3.2)
+------------------------
+- The classes you need to understand in java.io are File, FileReader, BufferedReader, FileWriter, BufferedWriter, and PrintWriter.
+- A new File object doesn't mean there's a new file on your hard drive.
+- File objects can represent either a file or a directory.
+- The File class lets you manage (add, rename, and delete) files and directories.
+- The methods createNewFile() and mkDir() add entries to your file system.
+- FileWriter and FileReader are low-level I/O classes. You can use them to write and read files, but they should usually be wrapped.
+- Classes in java.io are designed to be "chained" or "wrapped." (This is a common use of the decorator design pattern.)
+- It's very common to "wrap" a BufferedReader around a FileReader, to get access to higher-level (more convenient) methods.
+- It's very common to "wrap" a BufferedWriter around a FileWriter, to get access to higher-level (more convenient) methods.
+- PrintWriters can be used to wrap other Writers, but as of Java 5 they can be built directly from Files or Strings.
+- Java 5 PrintWriters have new append(), format(), and printf() methods.
+
+Serialization (Objective 3.3)
+------------------------------
+- The classes you need to understand are all in the java.io package; they include: ObjectOutputStream and ObjectInputStream primarily, and FileOutputStream and FileInputStream because you will use them to create the low-level streams that the ObjectXxxStream classes will use.
+- A class must implement the Serializable interface before its objects can be serialized.
+- The ObjectOutputStream.writeObject() method serializes objects, and the ObjectInputStream.readObject() method deserializes objects.
+- If you mark an instance variable transient, it will not be serialized even thought the rest of the object's state will be.
+- You can supplement a class's automatic serialization process by implementing the writeObject() and readObject() methods. If you do this, embedding calls to defaultWriteObject() and defaultReadObject(), respectively, will handle the part of serialization that happens normally.
+- If a superclass implements Serializable, then its subclasses do automatically.
+
+-Object Class has not been made serialized because : This is a potential security hole - by coincidence you can serialize e.g. your DataSource with database credentials inside - if the creator of this particular DataSource implementation forgot to make such fields transient. It's surprisingly easy to serialize random Java object, e.g. through inner classes holding implicit reference to outer this.
+
+- If a superclass doesn't implement Serializable, then when a subclass object is deserialized, the superclass constructor will run.
+
+
+Dates, Numbers, and Currency (Objective 3.4)
+----------------------------------------------
+- The classes you need to understand are java.util.Date, java.util.Calendar, java.text.DateFormat, java.text.NumberFormat, and java.util.Locale.
+- Most of the Date class's methods have been deprecated.
+- A Date is stored as a long, the number of milliseconds since January 1, 1970.
+- Date objects are go-betweens the Calendar and Locale classes.
+- The Calendar provides a powerful set of methods to manipulate dates, performing tasks such as getting days of the week, or adding some number of months or years (or other increments) to a date.
+- Create Calendar instances using static factory methods (getInstance()).
+- The Calendar methods you should understand are add(), which allows you to add or subtract various pieces (minutes, days, years, and so on) of dates, and roll(), which works like add() but doesn't increment a date's bigger pieces. (For example: adding 10 months to an October date changes the month to August, but doesn't increment the Calendar's year value.)
+- DateFormat instances are created using static factory methods (getInstance() and getDateInstance()).
+- There are several format "styles" available in the DateFormat class.
+- DateFormat styles can be applied against various Locales to create a wide array of outputs for any given date.
+- The DateFormat.format() method is used to create Strings containing properly formatted dates.
+- The Locale class is used in conjunction with DateFormat and NumberFormat.
+- Both DateFormat and NumberFormat objects can be constructed with a specific, immutable Locale.
+- For the exam you should understand creating Locales using language, or a combination of language and country.
+
+Parsing, Tokenizing, and Formatting (Objective 3.5)
+-----------------------------------------------------
+- regex is short for regular expressions, which are the patterns used to search for data within large data sources.
+- regex is a sub-language that exists in Java and other languages (such as Perl).
+- regex lets you to create search patterns using literal characters or metacharacters. Metacharacters allow you to search for slightly more abstract data like "digits" or "whitespace".
+- Study the \d, \s, \w, and . metacharacters
+- regex provides for quantifiers which allow you to specify concepts like: "look for one or more digits in a row."
+- Study the ?, *, and + greedy quantifiers.
+- Remember that metacharacters and Strings don't mix well unless you remember to "escape" them properly. For instance String s = "\\d";
+- The Pattern and Matcher classes have Java's most powerful regex capabilities.
+- You should understand the Pattern compile() method and the Matcher matcher(), pattern(), find(), start(), and group() methods.
+- You WON'T need to understand Matcher's replacement-oriented methods.
+- You can use java.util.Scanner to do simple regex searches, but it is primarily intended for tokenizing.
+- Tokenizing is the process of splitting delimited data into small pieces.
+- In tokenizing, the data you want is called tokens, and the strings that separate the tokens are called delimiters.
+- Tokenizing can be done with the Scanner class, or with String.split().
+- Delimiters are single characters like commas, or complex regex expressions.
+- The Scanner class allows you to tokenize data from within a loop, which allows you to stop whenever you want to.
+- The Scanner class allows you to tokenize Strings or streams or files.
+- The String.split() method tokenizes the entire source data all at once, so large amounts of data can be quite slow to process.
+- New to Java 5 are two methods used to format data for output. These methods are format() and printf(). These methods are found in the PrintStream class, an instance of which is the out in System.out.
+- The format() and printf() methods have identical functionality.
+- Formatting data with printf() (or format()) is accomplished using formatting strings that are associated with primitive or string arguments.
+- The format() method allows you to mix literals in with your format strings.
+- The format string values you should know are
+- Flags: -, +, 0, "," , and (
+- Conversions: b, c, d, f, and s
+- If your conversion character doesn't match your argument type, an exception will be thrown.
+
+
+
+
+
+
+QUESTIONS:
+==========
+
+String:
+
+1)why is string immutable:
+  -
+2)Why is String final:
+
+3)explain what does substring do? 
+ My friend got an opportunity to show off his talent, and how much he knows about Java API; 
+ He said substring method is used to get parts of String in Java. Its defined in java.lang.String class,
+ and it's an overloaded method. One version of substring method takes just beginIndex, and returns part of String started from beginIndex till end,
+ while other takes two parameters, beginIndex and endIndex, and returns part  of String starting from beginIndex to endIndex-1.
+ He also stressed that every time you call  substring() method in Java,  it will return a new String because String is immutable in Java.
+
+4)what will happen if beginIndex is equal to length in substring(int beginIndex), 
+ no it won't throw IndexOutOfBoundException instead it will return 
+ empty String. Same is the case when beginIndex and endIndex is equal, in case of second method. It will only throw StringIndexBoundException when
+ beginIndex is negative, larger than endIndex or larger than length of String.
+
+
+5)What is String pool in Java
+Another tough Java question asked in  String interview. String pool is a special storage area in Java heap, mostly located on PerGen space, to store String literals like "abc". When Java program creates a new String using String literal, JVM checks for that String in pool and if String literal is already present in pool than same object is returned instead of creating a whole new object. String pool check is only performed when you create String as literal, if you create String using new() operator, a new String object will be created even if String with same content is available in pool.
+
+
+6) What does intern() method do in Java
+As discussed in previous String interview question, String object crated by new() operator is by default not added in String pool as opposed to String literal. intern() method allows to put an String object into pool.
+(wrong)
+
+
+7) Does String is thread-safe in Java
+If you are familiar with the concept of immutability and thread-safety you can easily answer this String interview question in Java. Since String is immutable, it is thread-safe and it can be shared between multiple thread without external synchronization.
+
+8)Why character array is better than String for Storing password in Java
+Since Strings are immutable in Java if you store password as plain text it will be available in memory until Garbage collector clears it and since String are used in String pool for reusability there is pretty high chance that it will be remain in memory for long duration, which pose a security threat. Since any one who has access to memory dump can find the password in clear text and that's another reason you should always used an encrypted password than plain text. Since Strings are immutable there is no way contents of Strings can be changed because any change will produce new String, while if you char[] you can still set all his element as blank or zero. So Storing password in character array clearly mitigates security risk of stealing password.
+
+9)difference between StringBuffer, String and StringBuilder in Java :
+
+1) String is immutable while StringBuffer and StringBuilder is mutable object.
+2) StringBuffer is synchronized while StringBuilder is not which makes StringBuilder faster than StringBuffer.
+3) Concatenation operator "+" is internal implemented using either StringBuffer or StringBuilder.
+4) Use String if you require immutability, use Stringbuffer in java if you need mutable + thread-safety and use StringBuilder in Java if you require mutable + without thread-safety.
+**********************************************************************************************************
+
+StringTokenizer:
+===============
+eg:
+package com.myjava.stokenizerr;
+ 
+import java.util.StringTokenizer;
+ 
+public class MyStringTokens {
+    public static void main(String a[]){
+        String msg = "http://10.123.43.67:80/";
+        StringTokenizer st = new StringTokenizer(msg,"://.");
+        while(st.hasMoreTokens()){
+            System.out.println(st.nextToken());
+        }
+    }
+}
+**********************************************************************************************************
+
+
+Scanner Class:
+==============
+
+
+**********************************************************************************************************
+
+Formatter:
+==========

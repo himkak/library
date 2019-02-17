@@ -1,0 +1,13 @@
+GLASS FISH
+==========
+start : asadmin start-domain
+stop : asadmin stop-domain
+restart : asadmin restart-domain
+deploy : asadmin deploy <fileName>
+undeploy : 
+
+log file : glassfish_2.1.1_p17/domains/domain1/logs/server.log
+
+url : http://localhost:4848/login.jsf
+
+list jndi entries : /glassfish/bin/asadmin list-jndi-entries

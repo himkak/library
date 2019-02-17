@@ -1,0 +1,19 @@
+OVERRIDING:
+-If a subclass provides the same method as provided in the super class, with same method name and arguments list, its called overriding
+-The argument list should be exactly the same as that of the overridden method.
+-The return type should be the same or a subtype of the return type declared in the original overridden method in the super class.
+ If the return typr is different, compilation failure will occur
+-Covariant return type : overriding method having return type as subtype of the return type of overridden method. This feature came from java 5
+-If you are overriding a method, the overridden method must not be more restrictive in case of access modifiers.
+-Its not possible to override a static method, because static method is bound with class whereas instance method is bound with object.
+-A method declared static cannot be overridden but can be re-declared.
+-If superclass method does not declares exception, subclass overridden method cant declare checked exception but can declare unchecked exception
+-An overriding method can throw any uncheck exceptions, regardless of whether the overridden method throws exceptions or not. However the overriding method should not throw checked exceptions that are new or broader than the ones declared by the overridden method. The overriding method can throw narrower or fewer exceptions than the overridden method.
+-If a superclass method declares exception, subclass overridden method can declare same exception, or subclass exception or not exception but cant declare parent exception.
+-If a method is marked final it cant be overridden.
+-Overriding is solved at runtime.
+-Overriding depends on the object type and not on the reference type. 
+-If a method cannot be inherited then it cannot be overridden.
+-In order to call a overridden method
+ -super keyword can be used to refer parent class object.
+-super() can be uesd in the subclass constructor to call the parent class constructor. But it should be the first line in the subclass constructor.

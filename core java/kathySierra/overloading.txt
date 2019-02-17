@@ -1,0 +1,98 @@
+
+- Overloading is solved at compile time.
+  Eg :
+  public class OverloadSuperClass {
+	
+	void sum(OverloadSuperClass os){System.out.println("OverloadSuperClass");}
+
+ }
+ 
+ public class OverloadSubClass extends OverloadSuperClass {
+
+	void sum(OverloadSubClass os){System.out.println("OverloadSubClass");}
+	
+	public static void main(String[] args) {
+		OverloadSuperClass os = new OverloadSubClass();
+		os.sum(os);
+	}
+ }
+ 
+ Result : OverloadSuperClass
+ 
+- Overloaded methods MUST change the argument list (i.e, number of args or arg type).
+- Overloaded methods CAN change the return type.
+- Overloaded methods CAN change the access modifier.
+- Overloaded methods CAN declare new or broader checked exceptions.
+- static methods can be overloaded
+
+- Ambiguity in overloading results in compilation exception
+  Eg:
+  public class OverloadAmbiguity {
+
+	void sum(int i, long j){System.out.println("int, long");}
+	
+	void sum(long i, int j){System.out.println("long, int");}
+	
+	public static void main(String[] args) {
+		new OverloadAmbiguity().sum(10, 20);
+	}
+	
+ }
+
+ Result : Compilation Exception : The method sum(int, long) is ambiguous for the type OverloadAmbiguity
+  
+- Parameter is promoted to another type if the exact type is not found, but only to its super. This is called TypE Promotion
+
+
+
+
+=========================================================
+=========================================================
+=========================================================
+Advanced Overloading
+--------------------
+-Primitive widening uses the smallest method argument possible.
+-Used individually, boxing and var-args are compatible with overloading
+-You cannot widen from one wrapper type to another(IS-A fails).
+-you cannot widen and then box. (An int can't become Long)
+-You can box and then widen. (An int can become an object, via an Integer)
+-You can combine var-args with either widening or boxing. 
+-Some combinations of widening, var-args, boxing those are possible:
+  -wide & var-args
+  -box & var-args
+  -box & wide
+-If exact match is not found JVM will try to match the method in the following order-
+  (1)First widening between primitives will be preferred, 
+  if not found, then (2)Boxing will be preferred, 
+  if not found, then (3)var-args will be preferred.
+-The compiler will choose the older style before it chooses the newer style, keeping existing code more robust.
+
+
+
+Eg:
+1)
+class AddBoxing {
+static void go(Integer x) { System.out.println("Integer"); }
+static void go(long x) { System.out.println("long"); }
+public static void main(String [] args) {
+int i = 5;
+go(i); // which go() will be invoked?
+}
+}
+
+The output : long
+widening is preferred over boxing
+
+
+2)
+class AddVarargs {
+static void go(int x, int y) { System.out.println("int,int");}
+static void go(byte... x) { System.out.println("byte... "); }
+public static void main(String[] args) {
+byte b = 5;
+go(b,b); // which go() will be invoked?
+}
+}
+
+output : int,int
+Widening is preferred over var-args
