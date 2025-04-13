@@ -31,37 +31,37 @@ Composition is a special case of aggregation. In a more specific manner, a restr
 ##Strategy  pattern
 Defines a set of encapsulated algorithms that can be swapped to carry out a specific behaviour.
 
-##Observer pattern
+## Observer pattern
 The observer pattern defines a one-to-many dependency between objects so that when one object changes state, all of its dependents are notified and updated automatically.
 
-##Decorator pattern
+## Decorator pattern
 Decorator design pattern is used to enhance the functionality of a particular object at run-time or dynamically.  At the same time other instance of same class will not be affected by this so individual object gets the new behavior.  Basically we wrap the original object through decorator object.   Decorator design pattern is based on abstract classes and we derive concrete implementation from that classes. It’s a structural design pattern and most widely used.
 http://javapapers.com/design-patterns/decorator-pattern/
 http://javarevisited.blogspot.in/2011/11/decorator-design-pattern-java-example.html
 
 
-##Factory pattern
+## Factory pattern
 Factory pattern is one of most used design pattern in Java. This type of design pattern comes under creational pattern as this pattern provides one of the best ways to create an object.In Factory pattern, we create object without exposing the creation logic to the client and refer to newly created object using a common interface.
 http://www.tutorialspoint.com/design_pattern/factory_pattern.htm
 http://javarevisited.blogspot.in/2011/12/factory-design-pattern-java-example.html
 
-##singleton pattern
+## singleton pattern
 There should be only one instance allowed for a class and, we should allow global point of access to that single instance.
 http://javapapers.com/design-patterns/singleton-pattern/
 http://www.javaworld.com/article/2073352/core-java/simply-singleton.html
 
-##command pattern
+## command pattern
 
-##Adapter and Facade pattern:
+## Adapter and Facade pattern:
 
-##Template method pattern
+## Template method pattern
 
-##Iterator and composite pattern
+## Iterator and composite pattern
 
-##state pattern
+## state pattern
 
-##proxy pattern
+## proxy pattern
 
-##compound pattern
+## compound pattern
 
--MVC
+## MVC
